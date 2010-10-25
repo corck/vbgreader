@@ -11,49 +11,18 @@
         <style type="text/css" media="screen">@import "./css/vbg-reader.css";</style>
         <!-- import the jqtouch jquery and plugin files -->
         <script src="./js/jquery.zrssfeed.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./js/vbg.js" type="text/javascript" charset="utf-8"></script>
+
         <!-- declare jqtouch startup params -->
         <script type="text/javascript" charset="utf-8">
             var jQT=$.jQTouch({
                 icon: 'icon.png',
                 startupScreen: 'img/startup.png',
                 statusBar: 'black'
-
-            });            
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function () {               
-                //getFeed('http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:vorarlberg');
-                localStorage.setItem("news-source", 'http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:musik-cds');
-                $('#feed-list').bind('pageAnimationStart', function(event, info){
-                    $('#feed').hide();
-                    $('#ajax-loader').show();                    
-                    source = localStorage.getItem("news-source");
-                    $('#feed').rssfeed(source, {
-                        limit: 10
-                    }, initList);
-                    
-                });
-
-                $('#feed-list').bind('pageAnimationEnd', function(event, info){                    
-                    $('#feed').show();//
-                });
-
-
-                // sets id for news category
-                $('#news-source').delegate('a', 'click', (function(e){
-                    source = localStorage.setItem("news-source", this.getAttribute("data-src"));
-                }));
             });
-           
-            function initList() {
-                $('#ajax-loader').hide();
-                $('.entry').delegate("a", "click", function(e){                    
-                    e.preventDefault; // prevent default link behaviour
-                    id = this.id.replace(/feed-entry-/, ''); // get id
-                    localStorage.setItem("feed-entry", id); // set storage
-                    jQT.goTo('#article','slide');
-                });
-            }
+
+
+
         </script>
     </head>
     <body>
@@ -69,12 +38,52 @@
                     <a href="mailto:info@vedanova.com">info@vedanova.com</a>
                 </div>
             </div>
+
             <div id="main" class="current">
                 <div class="toolbar">
                     <h1>News Quellen</h1>
                     <a class="button cube" href="#about">About</a>
                 </div>
-                <ul class="edgetoedge" id="news-source">
+                <ul class="edgetoedge">
+                    <li class="arrow">
+                        <a href="#vol">Vorarlberg Online</a>
+                    </li>
+                    <li class="arrow news-source">
+                        <a href="#feed-list" data-src="http://www.bregenzerwald-news.at/?feed=rss2">Bregenzerwald News</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#huet">Hüt.at</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="huet">
+                <div class="toolbar">
+                    <h1>News Quellen</h1>
+                    <a class="back" href="#">Back</a>
+                </div>
+                <ul class="edgetoedge news-source" >
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.huet.at/veranstaltungen/bezirk-bludenz.rss">Bludenz</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.huet.at/veranstaltungen/bezirk-bregenz.rss">Bregenz</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.huet.at/veranstaltungen/bezirk-dornbirn.rss">Dornbirn</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.huet.at/veranstaltungen/bezirk-feldkirch.rss">Feldkirch</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="vol">
+                <div class="toolbar">
+                    <h1>News Quellen</h1>
+                    <a class="back" href="#">Back</a>
+                </div>
+                <ul class="edgetoedge news-source" >
                     <li class="sep">Schlagzeilen</li>
                     <li class="arrow">
                         <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:vorarlberg">Vorarlberg</a>

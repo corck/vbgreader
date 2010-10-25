@@ -1,0 +1,166 @@
+<!doctype html> 
+<html> 
+    <head> 
+        <meta charset="UTF-8" /> 
+        <title>Vorarlberg Reader</title>
+        <style type="text/css" media="screen">@import "./jqtouch/jqtouch.css";</style>
+        <script src="./jqtouch/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./jqtouch/jqtouch.js" type="application/x-javascript" charset="utf-8"></script>
+        <!-- import the jqtouch css and theme -->
+        <style type="text/css" media="screen">@import "./themes/jqt/theme.min.css";</style>
+        <style type="text/css" media="screen">@import "./css/vbg-reader.css";</style>
+        <!-- import the jqtouch jquery and plugin files -->
+        <script src="./js/jquery.zrssfeed.js" type="text/javascript" charset="utf-8"></script>
+        <!-- declare jqtouch startup params -->
+        <script type="text/javascript" charset="utf-8">
+            var jQT=$.jQTouch({
+                icon: 'icon.png',
+                startupScreen: 'img/startup.png',
+                statusBar: 'black'
+
+            });            
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {               
+                //getFeed('http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:vorarlberg');
+                localStorage.setItem("news-source", 'http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:musik-cds');
+                $('#feed-list').bind('pageAnimationStart', function(event, info){
+                    $('#feed').hide();
+                    $('#ajax-loader').show();                    
+                    source = localStorage.getItem("news-source");
+                    $('#feed').rssfeed(source, {
+                        limit: 10
+                    }, initList);
+                    
+                });
+
+                $('#feed-list').bind('pageAnimationEnd', function(event, info){                    
+                    $('#feed').show();//
+                });
+
+
+                // sets id for news category
+                $('#news-source').delegate('a', 'click', (function(e){
+                    source = localStorage.setItem("news-source", this.getAttribute("data-src"));
+                }));
+            });
+           
+            function initList() {
+                $('#ajax-loader').hide();
+                $('.entry').delegate("a", "click", function(e){                    
+                    e.preventDefault; // prevent default link behaviour
+                    id = this.id.replace(/feed-entry-/, ''); // get id
+                    localStorage.setItem("feed-entry", id); // set storage
+                    jQT.goTo('#article','slide');
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div id="jqt">
+            <div id="about">
+                <div class="toolbar">
+                    <h1>About</h1>
+                    <a class="back" href="#">Back</a>
+                </div>
+                <div class="info">
+                    Brought to you by<br/>
+                    Vedanova<br/>
+                    <a href="mailto:info@vedanova.com">info@vedanova.com</a>
+                </div>
+            </div>
+            <div id="main" class="current">
+                <div class="toolbar">
+                    <h1>News Quellen</h1>
+                    <a class="button cube" href="#about">About</a>
+                </div>
+                <ul class="edgetoedge" id="news-source">
+                    <li class="sep">Schlagzeilen</li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:vorarlberg">Vorarlberg</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/co:austria:politik">Politik</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:news-welt">Welt</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:special_wirtschaft_aktuell">Wirtschaft</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:sport-homepage">Sport</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/co:austria:politik">Welt</a>
+                    </li>
+                    <li class="sep">Unterhaltung</li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:leute">Leute</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:multimedia">Multimedia</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:musik-cds">Musik</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:special_sexy_aktuell">Sexy</a>
+                    </li>
+                    <li class="arrow">
+                        <a href="#feed-list" data-src="http://www.vol.at/rss.aspx/page/vol-article-index-rss-page/dc/tp:vol:gaming">Games</a>
+                    </li>
+                    <!--                    <li class="arrow"><a href="#about">About</a></li>-->
+                    <!--                    <li class="arrow"><a href="#settings">Settings</a></li>-->
+                    <!--                    <li class="arrow"><a href="#article">Article</a></li>-->
+                </ul>
+            </div>
+            <div id="settings">
+                <div class="toolbar">
+                    <h1>Settings</h1>
+                    <a class="button cancel" href="#">Cancel</a>
+                </div>
+                <form>
+                    <ul>
+                        <li><input placeholder="Age" type="text" name="age" id="age"/></li>
+                        <li><input placeholder="Weight" type="text" name="weight" id="weight"/></li>
+                        <li><input name="action" type="submit" value="Save Changes"/></li>
+                    </ul>
+                </form>
+            </div>
+            <div id="feed-list">
+                <div class="toolbar">
+                    <h1>News</h1>
+                    <a class="back" href="#">Back</a>
+                </div>
+                <img id="ajax-loader" src="ajax-loader.gif"/>
+                <div id="feed">
+
+                </div>
+
+            </div>
+            <div id="article">
+
+                <div class="toolbar">
+                    <h1>Artikel</h1>
+                    <a class="back" href="#">Back</a>
+                </div>
+                <h1 id="article-title">test</h1>
+                <div id="article-content" class="info">loading ...</div>
+                <a id="article-more" style="margin:10px 10px;color:rgba(0,0,0,.9)" href="#" class="whiteButton">More</a>
+            </div>
+        </div>
+        <script type="text/javascript">
+           
+            $('#article').bind('pageAnimationStart', function(event, info) {
+                $('#article-content').html(rss_feed.entries[id].content);
+                var more = rss_feed.entries[id].link;
+                $('#article-more').attr('href',more);
+                $('#article-title').html(rss_feed.entries[id].title);
+            });
+
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,27 @@
+
+#feed-data li {
+    font-size: 10pt;
+}
+
+#article-content {
+    -webkit-border-radius: 8px;
+    margin: 15px 10px 17px;
+    padding:10px;
+    border: 1px solid;
+    -webkit-box-shadow: rgba(0, 0, 0, 0, 296875);
+/*    color:#666;*/
+/*    background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#4C4D4E), to(#404142));*/
+    border-bottom: #555858;
+    text-align: left;
+    font-size: 14px;
+}
+
+#article-title {
+    color: white;
+    font-size: 14px;
+}
+
+
+/*#article-content *{
+    color:white;
+}*/

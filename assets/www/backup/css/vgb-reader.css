@@ -1,0 +1,11 @@
+.ui-content {
+ 
+border-width: 0px;
+overflow: visible;
+padding: 5px !important;
+
+}
+
+.ui-btn-text {
+    font-size: 10pt;
+}

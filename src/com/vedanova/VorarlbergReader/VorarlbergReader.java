@@ -1,7 +1,6 @@
 
-    package com.phonegap.VorarlbergReader;
+    package com.vedanova.VorarlbergReader;
 
-    import android.app.Activity;
     import android.os.Bundle;
     import com.phonegap.*;
 

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.phonegap.VorarlbergReader;
+package com.vedanova.VorarlbergReader;
 
 public final class R {
     public static final class attr {

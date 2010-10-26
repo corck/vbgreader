@@ -11,6 +11,7 @@
         <style type="text/css" media="screen">@import "./css/vbg-reader.css";</style>
         <!-- import the jqtouch jquery and plugin files -->
         <script src="./js/jquery.zrssfeed.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="js/jquery.query-yql.js"></script>
         <script src="./js/vbg.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- declare jqtouch startup params -->
@@ -20,8 +21,6 @@
                 startupScreen: 'img/startup.png',
                 statusBar: 'black'
             });
-
-
 
         </script>
     </head>
@@ -33,9 +32,11 @@
                     <a class="back" href="#">Back</a>
                 </div>
                 <div class="info">
-                    Brought to you by<br/>
+                    By<br/>
                     Vedanova<br/>
-                    <a href="mailto:info@vedanova.com">info@vedanova.com</a>
+                    <a href="mailto:info@vedanova.com">info@vedanova.com</a><br/>
+                    <a href="http://www.vedanova.com">www.vedanova.com</a><br/>
+                    Im Falle eines Fehlers schreibt mir bitte ein Email.
                 </div>
             </div>
 
@@ -47,6 +48,9 @@
                 <ul class="edgetoedge">
                     <li class="arrow">
                         <a href="#vol">Vorarlberg Online</a>
+                    </li>
+                    <li class="arrow news-source">
+                        <a href="#feed-list" data-src="http://vorarlberg.orf.at">ORF Vorarlberg</a>
                     </li>
                     <li class="arrow news-source">
                         <a href="#feed-list" data-src="http://www.bregenzerwald-news.at/?feed=rss2">Bregenzerwald News</a>
@@ -149,7 +153,6 @@
 
             </div>
             <div id="article">
-
                 <div class="toolbar">
                     <h1>Artikel</h1>
                     <a class="back" href="#">Back</a>
@@ -159,15 +162,16 @@
                 <a id="article-more" style="margin:10px 10px;color:rgba(0,0,0,.9)" href="#" class="whiteButton">More</a>
             </div>
         </div>
-        <script type="text/javascript">
-           
+        <script type="text/javascript">           
             $('#article').bind('pageAnimationStart', function(event, info) {
-                $('#article-content').html(rss_feed.entries[id].content);
-                var more = rss_feed.entries[id].link;
-                $('#article-more').attr('href',more);
-                $('#article-title').html(rss_feed.entries[id].title);
+                if (info.direction == 'in') {
+                    $('#article-content').empty();
+                    $('#article-content').html(rss_feed.entries[id].content);
+                    var more = rss_feed.entries[id].link;
+                    $('#article-more').attr('href',more);
+                    $('#article-title').html(rss_feed.entries[id].title);
+                }
             });
-
 
         </script>
 

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Test page for Query YQL</title>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("jquery", "1.3.2");
+        </script>
+        <script type="text/javascript" src="js/jquery.query-yql.js"></script>
+        <script type="text/javascript">
+            function rssFeed() {
+                this.entries = [];
+            }
+            function entry(title, content, link) {
+                this.title = title;
+                this.content = content;
+                this.link = link;
+            }
+
+            function yqlcall(target) {
+                var t = target;
+                var statement = "select * from html where url='http://vorarlberg.orf.at' and xpath='//table[@class=" +
+                    '"preview"' + "]//tr[td[@class=" + '"leftCol storylistPad"]]' + "'";
+                $.queryYQL(statement, "json", function (data) {
+                    var ul = $('<ul id="feed-data" class="rounded"/>');
+                    arr = data.query.results.tr
+                    rss_feed = new rssFeed();
+                    for (var i in arr) {
+                        tr = arr[i].td[2];
+                        li = $("<li/>");
+                        title = '';
+                        link = '';
+                        if(tr.a != null) {
+                            title = tr.a.span.content;
+                            link = tr.a.href;
+                        }
+                        else if (tr.div.a != null) {
+                            title = tr.div.a.content;
+                            link = tr.div.a.href;
+                        }
+                        else {
+                            title = tr.div.p;
+                            link = tr.p.strong.a.href;
+                        }
+                        c = tr.p.content;
+                        e = new entry(title, c, link);
+                        rss_feed.entries.push(e);
+                        html = '';
+                        html += '<li class="entry arrow" id="feed-entry-' + i + '">' +
+                            '<a  href="#article" id="feed-entry-' + i + '">' + title +'</a></li>'
+                        html += '</li>';
+
+                        li.append(html);
+                        li.appendTo(ul);
+                    }
+                   
+                    ul.appendTo(t);
+                });
+            };
+            $(document).ready(function () {
+                yqlcall($("#content").empty());
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Test page for Query YQL</h1>
+        <div id="content"></div>
+    </body>
+</html>

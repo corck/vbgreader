@@ -93,7 +93,7 @@
             //				'</div>';
 			
             // Add body
-            html += '<ul id="feed-data" class="rounded">';
+            html += '<ul id="feed-data" class="edgetoedge">';
 		
         // Add feeds
         for (var i=0; i<feeds.entries.length; i++) {
